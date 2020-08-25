@@ -2,7 +2,7 @@
 
 Please place apache-tomcat-8.5.57.tar.gz file and hello-1.0.war file before build the image
 
-** build image with below command**
+**build image with below command**
 ```
 docker build -t <imagename> .
 ```
