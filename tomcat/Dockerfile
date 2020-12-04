@@ -6,6 +6,8 @@ RUN yum install wget -y
 
 WORKDIR /home/
 
+ARG tomcat_version=apache-tomcat-8.5.60
+
 #installing Java8
 RUN wget -c --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u131-b11/d54c1d3a095b4ff2b6607d096fa80163/jdk-8u131-linux-x64.tar.gz && \
                    tar -zxvf jdk-8u131-linux-x64.tar.gz  && \
@@ -16,17 +18,18 @@ ENV JAVA_HOME=/home/jdk1.8.0_131
 ENV PATH=$JAVA_HOME/bin:$PATH
 
 
-ADD apache-tomcat-8.5.57.tar.gz /home/ 
+RUN wget https://mirrors.estointernet.in/apache/tomcat/tomcat-8/v8.5.60/bin/$tomcat_version.tar.gz &&\
+					tar -zxvf apache-tomcat-8.5.60.tar.gz && \
+					rm -rf apache-tomcat-8.5.60.tar.gz
+					
+#ADD apache-tomcat-8.5.57.tar.gz /home/ 
 
 #Adding deployment war file
-COPY hello-1.0.war /home/apache-tomcat-8.5.57/webapps
+COPY hello-1.0.war /home/$tomcat_version/webapps
 
 
-RUN chmod +x /home/apache-tomcat-8.5.57/bin/catalina.sh
+RUN chmod +x /home/$tomcat_version/bin/catalina.sh
 
 EXPOSE 8080
 
-
-ENTRYPOINT ["/home/apache-tomcat-8.5.57/bin/catalina.sh", "run"]
-
-
+ENTRYPOINT ["/home/apache-tomcat-8.5.60/bin/catalina.sh", "run"]
