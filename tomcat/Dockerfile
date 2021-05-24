@@ -29,12 +29,12 @@ RUN wget https://mirrors.estointernet.in/apache/tomcat/tomcat-8/v$tomcat_version
 
 #ADD apache-tomcat-8.5.57.tar.gz /home/
 
-#Adding deployment war file 
+#Adding deployment war file
 COPY $deployment_file /home/apache-tomcat-$tomcat_version/webapps
 
 
 RUN chmod +x /home/apache-tomcat-$tomcat_version/bin/catalina.sh
-EXPOSE 8080
-WORKDIR /home/apache-tomcat-$tomcat_version/bin/
 
-ENTRYPOINT ["catalina.sh", "run"]
+EXPOSE 8080
+
+ENTRYPOINT ["/home/apache-tomcat-8.5.66/bin/catalina.sh", "run"]
